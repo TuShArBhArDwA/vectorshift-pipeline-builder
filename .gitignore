@@ -35,3 +35,6 @@ yarn-error.log*
 .env
 .env.local
 .env.*.local
+
+# Assessment instructions (not for public repo)
+*.pdf
