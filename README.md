@@ -3,6 +3,17 @@
 A visual pipeline builder: a drag-and-drop node editor (React + ReactFlow) backed
 by a FastAPI service that analyzes the pipeline graph.
 
+## Live demo
+
+| Service | URL |
+|---------|-----|
+| Frontend (app) | https://pipeline.minianon.in |
+| Backend (API) | https://pipeline-api.minianon.in |
+
+Open the app, drag nodes from the toolbar onto the canvas, connect them, and
+click `Submit Pipeline` to see the live node/edge counts and DAG result. The
+backend health check at the API root returns `{"Ping": "Pong"}`.
+
 This repository is my submission for the VectorShift frontend technical
 assessment. It covers all four required parts:
 
