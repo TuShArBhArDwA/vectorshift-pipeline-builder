@@ -14,6 +14,7 @@ const selector = (state) => ({
 export const SubmitButton = () => {
   const { nodes, edges } = useStore(selector, shallow);
   const [loading, setLoading] = useState(false);
+  const [result, setResult] = useState(null);
 
   const handleSubmit = async () => {
     setLoading(true);
@@ -28,18 +29,10 @@ export const SubmitButton = () => {
         throw new Error(`Server responded with ${response.status}`);
       }
 
-      const { num_nodes, num_edges, is_dag } = await response.json();
-
-      alert(
-        `Pipeline Analysis\n\n` +
-          `• Nodes: ${num_nodes}\n` +
-          `• Edges: ${num_edges}\n` +
-          `• Valid DAG: ${is_dag ? 'Yes ✅' : 'No ❌'}\n\n` +
-          (is_dag
-            ? 'Your pipeline is a valid directed acyclic graph.'
-            : 'Your pipeline contains a cycle and is not a valid DAG.')
-      );
+      // Show the result in a styled, in-app dialog (see below).
+      setResult(await response.json());
     } catch (error) {
+      // Fall back to a native alert only if the backend is unreachable.
       alert(
         `Could not reach the backend.\n\n${error.message}\n\n` +
           `Make sure it is running:\n  cd backend && uvicorn main:app --reload`
@@ -50,10 +43,47 @@ export const SubmitButton = () => {
   };
 
   return (
-    <div className="vs-submit">
-      <button type="button" className="vs-submit__button" onClick={handleSubmit} disabled={loading}>
-        {loading ? 'Analyzing…' : 'Submit Pipeline'}
-      </button>
-    </div>
+    <>
+      <div className="vs-submit">
+        <button type="button" className="vs-submit__button" onClick={handleSubmit} disabled={loading}>
+          {loading ? 'Analyzing…' : 'Submit Pipeline'}
+        </button>
+      </div>
+
+      {result && (
+        <div className="vs-modal" role="dialog" aria-modal="true" onClick={() => setResult(null)}>
+          <div className="vs-modal__card" onClick={(e) => e.stopPropagation()}>
+            <h2 className="vs-modal__title">Pipeline Analysis</h2>
+
+            <div className="vs-modal__rows">
+              <div className="vs-modal__row">
+                <span>Nodes</span>
+                <strong>{result.num_nodes}</strong>
+              </div>
+              <div className="vs-modal__row">
+                <span>Edges</span>
+                <strong>{result.num_edges}</strong>
+              </div>
+              <div className="vs-modal__row">
+                <span>Valid DAG</span>
+                <span className={`vs-badge ${result.is_dag ? 'vs-badge--ok' : 'vs-badge--bad'}`}>
+                  {result.is_dag ? 'Yes' : 'No'}
+                </span>
+              </div>
+            </div>
+
+            <p className="vs-modal__msg">
+              {result.is_dag
+                ? 'Your pipeline is a valid directed acyclic graph.'
+                : 'Your pipeline contains a cycle, so it is not a valid DAG.'}
+            </p>
+
+            <button className="vs-modal__close" onClick={() => setResult(null)}>
+              Close
+            </button>
+          </div>
+        </div>
+      )}
+    </>
   );
 };
