@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useStore } from './store';
 import { shallow } from 'zustand/shallow';
 
-const API_BASE = 'http://localhost:8000';
+const API_BASE = process.env.REACT_APP_API_URL || 'http://localhost:8000';
 
 const selector = (state) => ({
   nodes: state.nodes,
