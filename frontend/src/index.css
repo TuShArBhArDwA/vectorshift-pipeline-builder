@@ -1,0 +1,244 @@
+:root {
+  --vs-bg: #f1f5f9;
+  --vs-surface: #ffffff;
+  --vs-border: #e2e8f0;
+  --vs-text: #0f172a;
+  --vs-muted: #64748b;
+  --vs-primary: #6366f1;
+  --vs-primary-dark: #4f46e5;
+  --vs-toolbar-bg: #0f172a;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--vs-bg);
+  color: var(--vs-text);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+/* ---------- App layout ---------- */
+.vs-app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.vs-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  gap: 12px;
+}
+
+/* ---------- Toolbar ---------- */
+.vs-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 12px 20px;
+  background: var(--vs-toolbar-bg);
+  color: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.vs-toolbar__brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  font-size: 18px;
+  white-space: nowrap;
+}
+
+.vs-toolbar__logo {
+  color: var(--vs-primary);
+  font-size: 20px;
+}
+
+.vs-toolbar__nodes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.vs-draggable {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 84px;
+  padding: 8px 14px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #fff;
+  cursor: grab;
+  user-select: none;
+  font-size: 13px;
+  font-weight: 500;
+  transition: background 0.15s ease, transform 0.1s ease;
+}
+
+.vs-draggable:hover {
+  background: var(--vs-primary);
+  border-color: var(--vs-primary);
+  transform: translateY(-1px);
+}
+
+.vs-draggable__icon {
+  font-size: 15px;
+}
+
+/* ---------- Canvas ---------- */
+.vs-canvas {
+  border: 1px solid var(--vs-border);
+  border-radius: 14px;
+  overflow: hidden;
+  background: var(--vs-surface);
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06);
+}
+
+/* ---------- Nodes ---------- */
+.vs-node {
+  width: 220px;
+  background: var(--vs-surface);
+  border: 1px solid var(--vs-border);
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);
+  overflow: hidden;
+  font-size: 13px;
+}
+
+.vs-node__header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  font-weight: 600;
+  color: #fff;
+  background: var(--accent, var(--vs-primary));
+}
+
+.vs-node__icon {
+  font-size: 14px;
+}
+
+.vs-node__body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 12px;
+}
+
+.vs-node__field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.vs-node__label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--vs-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.vs-node__input {
+  width: 100%;
+  padding: 6px 8px;
+  border: 1px solid var(--vs-border);
+  border-radius: 7px;
+  font-size: 13px;
+  color: var(--vs-text);
+  background: #fff;
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.vs-node__input:focus {
+  border-color: var(--accent, var(--vs-primary));
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent, var(--vs-primary)) 18%, transparent);
+}
+
+.vs-node__textarea {
+  resize: none;
+  overflow: hidden;
+  min-height: 34px;
+  font-family: inherit;
+  line-height: 1.4;
+}
+
+.vs-node__text {
+  margin: 0;
+  color: var(--vs-muted);
+}
+
+.vs-node__vars {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.vs-node__chip {
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--accent, var(--vs-primary));
+  background: color-mix(in srgb, var(--accent, var(--vs-primary)) 14%, transparent);
+}
+
+/* ---------- Handles ---------- */
+.vs-handle.react-flow__handle {
+  width: 11px;
+  height: 11px;
+  background: #fff;
+  border: 2px solid var(--accent, var(--vs-primary));
+  border-radius: 50%;
+}
+
+.vs-handle.react-flow__handle:hover {
+  background: var(--accent, var(--vs-primary));
+}
+
+/* ---------- Submit ---------- */
+.vs-submit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.vs-submit__button {
+  padding: 11px 28px;
+  border: none;
+  border-radius: 10px;
+  background: var(--vs-primary);
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.35);
+  transition: background 0.15s ease, transform 0.1s ease;
+}
+
+.vs-submit__button:hover:not(:disabled) {
+  background: var(--vs-primary-dark);
+  transform: translateY(-1px);
+}
+
+.vs-submit__button:disabled {
+  opacity: 0.6;
+  cursor: progress;
+}
