@@ -90,6 +90,7 @@ export const PipelineUI = () => {
             addNode(newNode);
           }
         },
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         [reactFlowInstance]
     );
 
