@@ -9,6 +9,7 @@ by a FastAPI service that analyzes the pipeline graph.
 |---------|-----|
 | Frontend (app) | https://pipeline.minianon.in |
 | Backend (API) | https://pipeline-api.minianon.in |
+| Video walkthrough | https://drive.google.com/file/d/1FnM-XQU8IU8_XzcvndvEs2QrBMuPSkoM/view?usp=sharing |
 
 Open the app, drag nodes from the toolbar onto the canvas, connect them, and
 click `Submit Pipeline` to see the live node/edge counts and DAG result. The
